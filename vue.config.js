@@ -1,4 +1,17 @@
-const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
-  transpileDependencies: true
-})
+module.exports = {
+  
+  //关闭eslint
+  lintOnSave:false,
+
+  //代理跨域
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://39.98.123.211',
+        
+        //路径排除掉 /api，此处不需要排除，需要携带
+        // pathRewrite: { '^/api': '' },
+      },
+    },
+  },
+}
