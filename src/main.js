@@ -11,9 +11,18 @@ import store from '@/store'
 
 //三级联动组件---全局组件
 import TypeNav from '@/components/TypeNav'
+import Carsousel  from '@/components/Carsousel'
+
+//引入MockServer.js-----mock数据
+import '@/mock/mockServer.js'
 
 //第一个参数：全局组件的名字；第二个参数：哪一个组件
 Vue.component(TypeNav.name,TypeNav);
+Vue.component(Carsousel.name,Carsousel);
+
+//引入swiper样式
+import 'swiper/css/swiper.min.css'
+import 'swiper/js/swiper.min.js'
 
 new Vue({
   render: h => h(App),

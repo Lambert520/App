@@ -126,8 +126,7 @@ export default {
       let node = event.target;
       //获取到当前触发这个事件的节点【h3、a、dt、dl】，需要带有data-categoryName这样节点【一定是a标签】
       //节点有一个属性dataset，可以获取节点的自定义属性与属性值
-      let { categoryname, category1id, category2id, category3id } =
-        node.dataset;
+      let { categoryname, category1id, category2id, category3id } = node.dataset;
       //如果标签身上拥有categoryname属性一定是a标签
       if (categoryname) {
         //整理路由跳转参数
@@ -141,10 +140,14 @@ export default {
         } else {
           query.categoryid = category3id;
         }
-        //整理完参数
-        location.query = query;
-        //路由跳转
-        this.$router.push(location);
+        //判断：如果路由跳转的时候，带有params参数，也要传递过去
+        if(this.$route.params){
+          location.params = this.$route.params;
+          //整理完参数
+          location.query = query;
+          //路由跳转 
+          this.$router.push(location);
+        }
       }
     },
     //鼠标移入的时候，展示
@@ -166,6 +169,7 @@ export default {
 <style lang="less" scoped>
 .type-nav {
   border-bottom: 2px solid #e1251b;
+  cursor: pointer;
 
   .container {
     width: 1200px;
@@ -191,7 +195,6 @@ export default {
         line-height: 45px;
         font-size: 16px;
         color: #333;
-        cursor: pointer;
       }
     }
 
@@ -217,7 +220,6 @@ export default {
 
             a {
               color: #333;
-              cursor: pointer;
             }
           }
 

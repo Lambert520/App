@@ -4,28 +4,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
-            </div>
-            <!-- <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carsousel :list="bannerList" />
       </div>
       <div class="right">
         <div class="news">
@@ -101,7 +80,29 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+
+export default {
+  name: "ListContainer",
+  //mounted：组件挂载完毕，正常说组件结构（DOM）已经有了
+  mounted() {
+    //派发action：通过Vuex发起ajax请求，将数据存储在仓库中
+    this.$store.dispatch("getBannerList");
+
+    //在new Swiper实例之前，页面中结构必须得有【在mounted里初始化实例发现不行】
+    //因为dispatch当中涉及到异步语句，导致v-for遍历的时候结构还没有完全形成，所以不行
+    //1、笨方法：使用一个定时器解决，延迟生成swiper实例
+    // setTimeout(() => {
+       
+    // }, 2000);
+   
+  },
+  computed: {
+    ...mapState({
+      bannerList: (state) => state.home.bannerList,
+    }),
+  },
+};
 </script>
 
 <style lang="less" scoped>

@@ -91,7 +91,14 @@
 
         //面试题4：路由组件能不能传递片props数据？
         //可以
-        this.$router.push({name: 'search',params: {keyword: this.keyword},query: { k: this.keyword.toUpperCase()}})
+        let location = {
+              name: 'search',
+              params: {keyword: this.keyword || undefined}
+          }
+        if(this.$route.query){
+          location.query = this.$route.query;
+        }
+        this.$router.push(location);
       }
     }
   };

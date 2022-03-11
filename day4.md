@@ -13,4 +13,25 @@
     需要进行优化，请求三级列表数据方法放在 TypeNav组件中，每次使用到这个组件，都会发出请求，性能较差
     我们需要让它 放在App组件中发请求，【根组件mounted】执行一次
 
-3：合并params和query参数
+3：合并params和query参数?
+    这样查询才能精确
+
+4：开发Home首页当中的ListContainer组件和Floor组件？
+    但是这里需要知道一件事情：服务器返回的数据（接口）只有商品分类菜单数据对于ListContainer组件与Floor组件
+    数据服务器没有数据提供
+    
+    mock数据（模拟）：如果你想mock数据，需要用到一个插件mock.js
+    使用的步骤：
+    1、在项目文件夹src文件夹中创建mock文件夹
+    2、准备JSON数据（mock文件夹中创建相应的JS文件）----格式化一下，不要有空格
+    3、把mock数据需要的图片放置到public文件夹中【public文件夹在打包的时候，会把相应的资源原封不动打包到dist文件夹中】
+    4、创建mockServer.js通过mock.js插件实现模拟数据
+    5、mockServer.js文件在入口文件中引入（至少需要执行一次，才能模拟数据）
+
+5：ListContainer组件的开发重点？
+    步骤：
+    1）引包（相应的JS|CSS）
+    2）页面结构务必有
+    3）（页面当中务必要有结构）：new Swiper实例【轮播图的动态效果】
+
+    1、安装Swiper插件：需要安装swiper@5 cnpm install --save swiper@5
