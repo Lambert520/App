@@ -30,5 +30,9 @@ new Vue({
   //注册路由信息：当这里书写router的时候，组件身上都拥有$route,$router属性
   router,
   //注册仓库：组件实例的身上会多一个属性 $store属性
-  store
+  store,
+  //全局事件总线$bus的配置
+  beforeCreate(){
+    Vue.prototype.$bus = this;
+  }
 }).$mount('#app')

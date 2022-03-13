@@ -134,11 +134,11 @@ export default {
         let query = { categoryname: categoryname };
         //一级分类、二级分类、三级分类的a标签
         if (category1id) {
-          query.categoryid = category1id;
+          query.category1id = category1id;
         } else if (category2id) {
-          query.categoryid = category2id;
+          query.category2id = category2id;
         } else {
-          query.categoryid = category3id;
+          query.category3id = category3id;
         }
         //判断：如果路由跳转的时候，带有params参数，也要传递过去
         if(this.$route.params){
