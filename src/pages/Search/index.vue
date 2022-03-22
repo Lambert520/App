@@ -26,7 +26,7 @@
             </li>
             <!--平台售卖属性的面包屑-->
             <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="index" >{{attrValue.split(':')[1]}}
-            <i @click="removeAttr(index)">×</i>
+              <i @click="removeAttr(index)">×</i>
             </li>
           </ul>
         </div>
@@ -40,15 +40,16 @@
             <div class="navbar-inner filter">
               <!--排序的结构-->
               <ul class="sui-nav">
-                <li :class="active">
-                  <a href="#">综合</a>
+                <li :class="{active: isOne}" @click="changeOrder(1)">
+                  <a >综合<span v-show="isOne" class="iconfont" :class="{'icon-up': isAsc,'icon-down': isDesc}"></span></a>
                 </li>
-                <li>
-                  <a href="#">价格</a>
+                <li :class="{active: isTwo}" @click="changeOrder(2)">
+                  <a >价格<span v-show="isTwo" class="iconfont" :class="{'icon-up': isAsc,'icon-down': isDesc}"></span></a>
                 </li>
               </ul>
             </div>
           </div>
+          <!--销售产品列表-->
           <div class="goods-list">
             <ul class="yui3-g">
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
@@ -78,35 +79,8 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <!--分页器-->
+          <Pagination :pageNo="2" :pageSize="3" :total="91" :continues="5"/>
         </div>
       </div>
     </div>
@@ -136,7 +110,7 @@
               categoryname: '',
               //关键字
               keyword: '',
-              //排序：初始状态应该是综合|降序
+              //排序：初始状态应该是综合且降序
               order: '1:desc',
               //分页器用的：代表的是当前是第几页
               pageNo: 1,
@@ -161,7 +135,19 @@
     },
     computed:{
       //mapGetters里面的写法：传递数组，因为getters计算是没有划分模块的【home，search】
-      ...mapGetters(['goodsList'])
+      ...mapGetters(['goodsList']),
+      isOne(){
+        return this.searchParams.order.indexOf('1') != -1;
+      },
+      isTwo(){
+        return this.searchParams.order.indexOf('2') != -1;
+      },
+      isAsc(){
+        return this.searchParams.order.indexOf('asc') != -1;
+      },
+      isDesc(){
+        return this.searchParams.order.indexOf('desc') != -1;
+      },
     },
     methods: {
         //向服务器发请求，获取search模块的数据（根据参数不同，返回不同的数据）
@@ -211,6 +197,7 @@
           this.searchParams.trademark = undefined;
           this.getData();
         },
+        //自定义事件回调函数
         attrInfo(attr,attrValue){
           //["属性ID:属性值:属性名"]
           let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
@@ -227,7 +214,29 @@
         removeAttr(index){
           this.searchParams.props.splice(index,1);
           this.getData();
-        }
+        },
+        //商品按综合排序还是价格排序
+        changeOrder(flag){
+          //flag形参：它是一个标记，代表用户点击的是综合（1）还是价格（2）
+          let originOrder = this.searchParams.order;
+          //这是获取到的是最开始的状态
+          let originFlag = originOrder.split(':')[0];
+          let originSort = originOrder.split(':')[1];
+          //准备一个新的order属性值
+          let newOrder = '';
+          //这个语句我能确定点击的一定是综合
+          if(flag==originFlag){
+            //${}配合反单引号完成拼接字符串的功能
+            newOrder = `${originFlag}:${originSort=='desc'?'asc':'desc'}`;
+          }else{
+            //点击的是价格，此处处理的是第一次点价格，赋予order 价格的初始值，之后页面不刷新，再点击价格，不会来到这个代码片段
+            newOrder = `${flag}:${'desc'}`;
+          }
+          //将新的order赋予searchParams
+          this.searchParams.order = newOrder;
+          this.getData();
+        },
+
     },
     watch: {
         //监听路由的信息是否变化，如果发生变化，再次发起请求
