@@ -1,15 +1,15 @@
 //配置路由的地方
+
+//引入vue
 import Vue from "vue";
-import VueRouter from 'vue-router'
+//引入vue-router路由组件
+import VueRouter from 'vue-router';
+//引入路由配置信息
+import routes from './routes.js'
 
 //使用插件
 Vue.use(VueRouter)
 
-//引入路由组件
-import Home from '@/pages/Home/index.vue'
-import Login from '@/pages/Login/index.vue'
-import Register from '@/pages/Register/index.vue'
-import Search from '@/pages/Search/index.vue'
 
 //先把VueRouter原型对象的push，保存一份，保存到了window上
 let originPush = VueRouter.prototype.push
@@ -20,8 +20,8 @@ let originReplace = VueRouter.prototype.replace
 //第二个参数：成功的回调
 //第三个参数：失败的回调
 //call || apply区别
-    //相同点，都可以调用函数一次，都可以篡改函数的上下文一次
-    //不同点：call与apply传递参数：call传递参数用逗号隔开，apply方法执行，传递数组
+//相同点，都可以调用函数一次，都可以篡改函数的上下文一次
+//不同点：call与apply传递参数：call传递参数用逗号隔开，apply方法执行，传递数组
 VueRouter.prototype.push = function (location, resolve, reject) {
 
     if (resolve && reject) {
@@ -44,42 +44,10 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 export default new VueRouter({
 
     //配置路由
-    routes: [
-        {
-            path: '/home',
-            component: Home,
-            meta: { show: true }
-        },
-        {
-            path: '/login',
-            component: Login,
-            meta: { show: false }
-        },
-        {
-            path: '/register',
-            component: Register,
-            meta: { show: false }
-        },
-        {
-            path: '/search/:keyword?',
-            component: Search,
-            meta: { show: true },
-            name: 'search',
-            //路由组件能不能传递props数据？
-            //布尔值写法:
-            // props: true
-            //对象写法：额外的给路由组件传递一些参数props
-            // props:{a:1,b:2}
-            //函数写法：可以params参数、query参数，通过props传递给路由组件(常用)
-            props: ($route)=>{
-                return {categoryid:$route.query.categoryid,categoryname:$route.query.categoryname}
-            }
-
-        },
-        //重定向，在项目跑起来的时候，访问/，立马让他定向到首页
-        {
-            path: '*',
-            redirect: '/home'
-        }
-    ]
+    routes,
+    //滚动行为
+    scrollBehavior(to, from, savedPosition) {
+        // 返回的这个y=0，代表的滚动条在最上方
+        return { y: 0 }
+    },
 })
