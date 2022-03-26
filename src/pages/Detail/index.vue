@@ -69,7 +69,7 @@
                   <dd changepirce="0" 
                     :class="{active:spuSaleAttrValue.isChecked==1}" 
                     v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id"
-                    @click="changeActive(spuSaleAttrValue,spuSaleAttrValueList)"
+                    @click="changeActive(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)"
                     >
                     {{spuSaleAttrValue.saleAttrValueName}}
                   </dd>
@@ -77,12 +77,15 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum">
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum--:skuNum=1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!--之前路由跳转，从A路由跳转到B路由，这里在加入购物车，进行路由跳转之前，发请求
+                    把你购买的产品信息通过请求的形式通知服务器。服务器进行相应的存储
+                -->
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -339,6 +342,12 @@
 
   export default {
     name: 'Detail',
+    data () {
+        return {
+          //购买产品的个数
+          skuNum: 1
+        }
+    },
     components: {
       ImageList,
       Zoom
@@ -355,13 +364,55 @@
       }
     },
     methods: {
+      //产品的售卖属性值切换高亮：saleAttrValur是你点击的那个属性值对应的对象，arr是前面对象所在的数组
       changeActive(saleAttrValue,arr){
-        //遍历全部售卖属性值，isChecked为0就没有高亮了
+        //遍历当前对象全部售卖属性值，把isChecked变成0，就没有高亮了
         arr.forEach(item => {
           item.isChecked = 0;
         });
-        //点击的那个售卖属性值 isChecked为1
+        //将点击的那个售卖属性的isChecked 变为1
         saleAttrValue.isChecked = 1;
+      },
+      //表单元素修改产品个数
+      changeSkuNum(event){
+        //用户输入进来的文本 *1
+        let value = event.target.value * 1;
+        //用户输入非法的数据，出现NaN或小于1
+        if(isNaN(value) || value<1){
+          this.skuNum = 1;
+        }else{
+          //正常：大于1【出现小数的情况】
+          this.skuNum = parseInt(value);
+        }
+      },
+      //加入购物车的回调函数
+      async addShopCart(){
+        /*
+          1.发请求----将产品加入到数据库（通知服务器）
+          派发一个action，向服务器发送请求
+          还需要判断加入购物车成功了还是失败了
+          下面这行代码调用的仓库中addOrUpdateShopCart方法加上了aync,
+          返回的值一定是 Promise
+          要么成功，要么失败
+         */
+        try {
+          //成功
+          await this.$store.dispatch('addOrUpdateShopCart',{
+            skuId: this.$route.params.skuId,
+            skuNum: this.skuNum
+          });
+          
+          //路由跳转
+          this.$router.push({
+            name: 'AddCartSuccess',
+          })
+        } catch (error) {
+          //失败
+          alert(error.message);
+        }
+        //2.服务器存储成功----进行路由跳转传递参数
+
+        //3.失败，给用户进行提示
       }
     }
   }
