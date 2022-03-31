@@ -1,5 +1,7 @@
 import { reqAddOrUpdateShopCart, reqGoodsInfo } from '@/api'
 import { Promise } from 'core-js';
+//封装游客身份模块uuid ----->生成一个随机字符串（不能改变）
+import {getUUID} from '@/utils/uuid_token'
 
 //获取产品信息的action
 const actions = {
@@ -44,7 +46,8 @@ const mutations = {
 }
 
 const state = {
-    goodsInfo: {}
+    goodsInfo: {},
+    uuid_token: getUUID()
 }
 
 const getters = {

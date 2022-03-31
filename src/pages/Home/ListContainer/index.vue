@@ -176,7 +176,8 @@ export default {
           width: 25%;
 
           .list-item {
-            background-image: url(./images/icons.png);
+            //@是src文件夹的别名，在CSS中使用，需要加小波浪线
+            background-image: url(~@/assets/images/icons.png);
             width: 61px;
             height: 40px;
             display: block;

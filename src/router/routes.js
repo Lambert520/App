@@ -7,6 +7,7 @@ import Register from '@/pages/Register/index.vue'
 import Search from '@/pages/Search/index.vue'
 import Detail from '@/pages/Detail/index.vue'
 import AddCartSuccess from '@/pages/AddCartSuccess/index.vue'
+import ShopCart from '@/pages/ShopCart/index.vue'
 
 export default [
     {
@@ -43,15 +44,24 @@ export default [
 
     },
     {
-        path: '/detail/:skuId',
+        //产品详细信息路由
+        path: '/detail/:skuId?',
         component: Detail,
         //路由元信息key不能瞎写，只能叫做meta，表示Footer组件要不要展示
         meta: { show: true }
     },
     {
+        //添加购物车路由
         path: '/addcartsuccess',
         component: AddCartSuccess,
         name: 'AddCartSuccess',
+        meta: {show: true}
+    },
+    {
+        //购物车路由
+        path: '/shopcart',
+        component: ShopCart,
+        name: 'ShopCart',
         meta: {show: true}
     },
     //重定向，在项目跑起来的时候，访问/，立马让他定向到首页

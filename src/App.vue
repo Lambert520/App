@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header/>
+    <Header v-show="$route.meta.show"/>
     <!--路由出口的地方-->
     <router-view></router-view> 
     <!--在Home、Search显示的，在登录、注册隐藏-->

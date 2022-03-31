@@ -393,26 +393,28 @@
           还需要判断加入购物车成功了还是失败了
           下面这行代码调用的仓库中addOrUpdateShopCart方法加上了aync,
           返回的值一定是 Promise
-          要么成功，要么失败
+          2.需要知道请求是成功还是失败了，若失败，要给用户提示
          */
         try {
-          //成功
+          //服务器存储成功----进行路由跳转传递参数
           await this.$store.dispatch('addOrUpdateShopCart',{
             skuId: this.$route.params.skuId,
             skuNum: this.skuNum
           });
           
-          //路由跳转
+          //3.路由跳转,需要把产品信息带给下一级路由组件
+          //一些简单的数据skuNum，通过query形式给路由组件传递过去
+          //产品信息的数据【数据比较复杂:skuInfo】，通过会话存储（不持久化，会话结束数据再消失）
+          //本地存储|会话存储，一般存储的是 字符串
+          sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
           this.$router.push({
             name: 'AddCartSuccess',
-          })
+            query: {skuNum: this.skuNum}
+          });
         } catch (error) {
-          //失败
+          //失败，给用户进行提示
           alert(error.message);
         }
-        //2.服务器存储成功----进行路由跳转传递参数
-
-        //3.失败，给用户进行提示
       }
     }
   }
