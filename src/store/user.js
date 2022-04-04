@@ -45,6 +45,9 @@ const actions = {
         let result = await reqUserInfoByToken();
         if (result.code == 200) {
             context.commit('GETUSERINFO', result.data);
+            return Promise.resolve('ok');
+        }else{
+            return Promise.reject(new Error('获取用户信息失败'));
         }
     },
     //退出登录(header组件调用)

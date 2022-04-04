@@ -21,7 +21,7 @@
               </div>
               <div class="input-text clearFix">
                 <span class="pwd"></span>
-                <input type="text" placeholder="请输入密码" v-model="password">
+                <input type="password" placeholder="请输入密码" v-model="password">
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
