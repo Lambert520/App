@@ -100,3 +100,16 @@ export const reqLogout = ()=>requests({
     url: '/user/passport/logout',
     method: 'GET'
 })
+
+//获取用户地址信息
+//地址：/api/user/userAddress/auth/findUserAddressList  请求方式：GET
+export const reqAddressInfo = ()=>requests({
+    url: '/user/userAddress/auth/findUserAddressList',
+    method: 'GET'
+})
+
+//获取商品清单
+//地址：/api/order/auth/trade 请求方式：GET
+export const reqOrderInfo = ()=>requests({
+    
+})

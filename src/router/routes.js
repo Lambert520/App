@@ -1,13 +1,14 @@
 //路由配置的信息
 
 //引入路由组件
-import Home from '@/pages/Home/index.vue'
-import Login from '@/pages/Login/index.vue'
-import Register from '@/pages/Register/index.vue'
-import Search from '@/pages/Search/index.vue'
-import Detail from '@/pages/Detail/index.vue'
-import AddCartSuccess from '@/pages/AddCartSuccess/index.vue'
-import ShopCart from '@/pages/ShopCart/index.vue'
+import Home from '@/pages/Home'
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
+import Search from '@/pages/Search'
+import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
+import ShopCart from '@/pages/ShopCart'
+import Trade from '@/pages/Trade'
 
 export default [
     {
@@ -55,14 +56,20 @@ export default [
         path: '/addcartsuccess',
         component: AddCartSuccess,
         name: 'AddCartSuccess',
-        meta: {show: true}
+        meta: { show: true }
     },
     {
         //购物车路由
         path: '/shopcart',
         component: ShopCart,
         name: 'ShopCart',
-        meta: {show: true}
+        meta: { show: true }
+    },
+    {
+        //
+        path: '/trade',
+        component: Trade,
+        meta: { show: true },
     },
     //重定向，在项目跑起来的时候，访问/，立马让他定向到首页
     {
