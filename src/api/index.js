@@ -111,5 +111,28 @@ export const reqAddressInfo = ()=>requests({
 //获取商品清单
 //地址：/api/order/auth/trade 请求方式：GET
 export const reqOrderInfo = ()=>requests({
-    
+    url: '/order/auth/trade',
+    method: 'GET'
+})
+
+//提交订单的接口
+//地址：/api/order/auth/submitOrder?tradeNo={tradeNo} 请求方式：POST
+export const reqSubmitOrder = (tradeNo,data)=>requests({
+    url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
+    method: 'POST',
+    data
+});
+
+//获取支付页面的信息
+//地址：/api/payment/weixin/createNative/{orderId} 请求方式：GET
+export const reqPayInfo = (orderId)=>requests({
+    url: `/payment/weixin/createNative/${orderId}`,
+    method: 'GET'
+})
+
+//获取支付订单状态
+//地址：/api/payment/weixin/queryPayStatus/{orderId} 请求方式：GET
+export const reqPayStatus = (orderId)=>requests({
+    url: `/payment/weixin/queryPayStatus/${orderId}`,
+    method: 'GET'
 })

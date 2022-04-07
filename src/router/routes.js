@@ -9,6 +9,9 @@ import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
+import Center from '@/pages/Center'
 
 export default [
     {
@@ -66,10 +69,29 @@ export default [
         meta: { show: true }
     },
     {
-        //
+        //结算
         path: '/trade',
         component: Trade,
         meta: { show: true },
+    },
+    {
+        //提交订单
+        path: '/pay',
+        name: 'pay',
+        component: Pay,
+        meta: { show: true },
+    },
+    {
+        //支付成功
+        path: '/paysuccess',
+        component: PaySuccess,
+        meta: { show: true }
+    },
+    {
+        //个人中心
+        path: '/center',
+        component: Center,
+        meta: { show: true }
     },
     //重定向，在项目跑起来的时候，访问/，立马让他定向到首页
     {

@@ -38,7 +38,7 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
-              <!--排序的结构-->
+              <!--排序的结构  iconfont样式的css引入在index.html中-->
               <ul class="sui-nav">
                 <li :class="{active: isOne}" @click="changeOrder(1)">
                   <a >综合<span v-show="isOne" class="iconfont" :class="{'icon-up': isAsc,'icon-down': isDesc}"></span></a>
