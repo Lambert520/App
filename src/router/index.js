@@ -85,13 +85,21 @@ router.beforeEach(async (to,from,next)=>{
                     await store.dispatch('userLogout');
                     next('/login');
                     alert(error.message);
-
                 }
             }
         }
     }else{
-        //未登录【未处理完毕，之后处理】
-        next();
+        //未登录：不能去交易相关、不能去支付相关【pay|paysuccess】、不能去个人中心
+        //未登录去上面这些路由-----登录
+        let toPath = to.path;
+        if(toPath.indexOf('/trade')!= -1 || toPath.indexOf('/pay')!=-1 || toPath.indexOf('/center')!=-1){
+            //把未登录的
+            next('/login?redirect='+toPath);
+        }else{
+            //去的不是上面这些路由（home|search|shopcart）---放行
+            next();
+        }
+        
 
     }
 });

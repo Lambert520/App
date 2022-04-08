@@ -1,6 +1,6 @@
 //路由配置的信息
 
-//引入路由组件
+//引入一级路由组件
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
@@ -12,6 +12,10 @@ import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
 import Center from '@/pages/Center'
+
+//引入二级路由组件
+import MyOrder from '@/pages/Center/MyOrder'
+import GroupOrder from '@/pages/Center/GroupCenter'
 
 export default [
     {
@@ -73,6 +77,17 @@ export default [
         path: '/trade',
         component: Trade,
         meta: { show: true },
+        //路由独享守卫
+        beforeEnter(to, from, next) {
+            //去交易界面，必须是从购物车而来
+            if (from.path == '/shopcart') {
+                next();
+            } else {
+                //中断当前导航，URL变成from的path
+                //其他路由组件过来，停留在当前
+                next(false);
+            }
+        }
     },
     {
         //提交订单
@@ -80,6 +95,13 @@ export default [
         name: 'pay',
         component: Pay,
         meta: { show: true },
+        beforeEnter(to, from, next) {
+            if (from.path == '/trade'){
+                next();
+            }else{
+                next(false);
+            }
+        }
     },
     {
         //支付成功
@@ -91,11 +113,27 @@ export default [
         //个人中心
         path: '/center',
         component: Center,
-        meta: { show: true }
+        meta: { show: true },
+        children: [
+            {
+                path: 'myorder',
+                component: MyOrder,
+                meta: { show: true }
+            },
+            {
+                path: 'grouporder',
+                component: GroupOrder,
+                meta: { show: true }
+            },
+            {
+                path: '/center',
+                redirect: '/center/myorder'
+            }
+        ]
     },
     //重定向，在项目跑起来的时候，访问/，立马让他定向到首页
     {
-        path: '*',
+        path: '/',
         redirect: '/home'
     }
 ]

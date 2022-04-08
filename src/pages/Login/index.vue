@@ -81,7 +81,11 @@
           try {
             //登陆成功
             phone&&password&&await this.$store.dispatch('userLogin',{phone,password})
-            this.$router.push('/home');
+            //登录的路由组件：看路由当中是否包含query参数，有跳到query参数指定的路由，没有跳到home
+            //||运算符的用法：当有redirect时，不会执行后面的，直接进行赋值；没有的话，才执行后面的
+            let toPath = this.$route.query.redirect || '/home';
+            console.log(toPath);
+            this.$router.push(toPath);
           } catch (error) {
             alert(error.message);
           }
