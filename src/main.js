@@ -37,6 +37,25 @@ Vue.prototype.$alert = MessageBox.alert;
 //统一接收api文件夹里面全部请求函数（不使用vuex方式处理请求）
 import * as API from '@/api'
 
+//引入图片懒加载插件，此处的VueLazyload是一个对象，有install方法
+import VueLazyload from 'vue-lazyload'
+//引入懒加载图片
+import loading from '@/assets/loading.gif'
+//注册插件--此处调用use方法，实际上执行的是install方法，使用Vue.prototype为Vue实例添加实例方法，属性
+Vue.use(VueLazyload,{
+  //懒加载默认的图片
+  loading
+});
+
+//引入自定义插件
+// import myPlugins from './plugins/myPlugins'
+// Vue.use(myPlugins,{
+//   name: 'upper'
+// });
+
+//引入表单校验插件
+import '@/plugins/validate'
+
 new Vue({
   render: h => h(App),
   //注册路由：底下的写法KV一致省略V【router小写的】

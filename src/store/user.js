@@ -37,7 +37,7 @@ const actions = {
             setToken(result.data.token);
             return Promise.resolve('ok');
         } else {
-            return Promise.reject(new Error('登录失败'));
+            return Promise.reject(new Error('账户名或密码错误'));
         }
     },
     //通过token，获取用户信息

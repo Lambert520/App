@@ -14,4 +14,7 @@ module.exports = {
       },
     },
   },
+
+  //此配置是 项目打包后不生成的map文件
+  productionSourceMap:false
 }

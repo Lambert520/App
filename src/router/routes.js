@@ -1,7 +1,6 @@
 //路由配置的信息
 
 //引入一级路由组件
-import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Search from '@/pages/Search'
@@ -17,10 +16,18 @@ import Center from '@/pages/Center'
 import MyOrder from '@/pages/Center/MyOrder'
 import GroupOrder from '@/pages/Center/GroupCenter'
 
+/*
+    当打包构建应用时，JavaScript 包会变得非常大，影响页面加载。
+    如果我们能把不同路由对应的组件分割成不同的代码块，
+    然后当路由被访问的时候才加载对应组件，这样就会更加高效。
+*/
+
+//路由配置信息
 export default [
     {
         path: '/home',
-        component: Home,
+        //路由懒加载
+        component: ()=> import('@/pages/Home'),
         //路由元信息key不能瞎写，只能叫做meta，表示footer组件要不要展示
         meta: { show: true }
     },
