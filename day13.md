@@ -97,13 +97,13 @@
         yum install nginx [etc]
 
         location / {
-            root  /root/jch/www/shangpinhui/dist
-            index index.html
-            try_files $url $url/ /index.html
+            root  /root/jch/www/shangpinhui/dist;
+            index index.html;
+            try_files $url $url/ /index.html;
         }
 
         location /api {
-            proxy_pass http://101.35.46.63 
+            proxy_pass http://101.35.46.63; 
         }
 
         service nginx start
@@ -114,5 +114,26 @@
         1：为啥直接访问 ip http://101.35.46.63 就能找到下面的文件（需要配置一些东西）
         刚刚在服务器上-> /root/jch/www/shangpinhui/dist
 
-        2：项目的数据来自于http://39.98.123.211
-    
+        2：项目的数据来自于http://39.98.123.211，怎么获取，nginx代理
+
+        3：nginx配置
+            3.1 xshell进入 根目录的/etc
+            3.2 进入etc目录，这个目录下有一个叫nginx目录，进入到这个目录【已经安装过nginx，如果没有安装过，只有四五个文件】
+        
+            3.3 如果想安装nginx，在当前目录  使用命令 yum install nginx 安装
+            3.4 安装完nginx服务器以后，你会发现在nginx目录下，多了一个叫nginx.conf文件，在这个文件中进行配置
+            3.5 vi nginx.conf进行编辑，主要添加如下两项
+                (此文件夹中的其他location需要注释掉，这是nginx自己的，不能使用，否则报错)
+                下面解决第一个问题：
+                location / {
+                    root  /root/jch/www/shangpinhui/dist;
+                    index index.html;
+                    try_files $uri $uri/ /index.html;
+                }
+                
+                解决第二个问题：
+                location /api {
+                    proxy_pass http://39.98.123.211; 
+                }
+            3.6 nginx服务器启动
+                service nginx start
