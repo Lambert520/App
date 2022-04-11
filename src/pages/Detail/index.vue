@@ -345,7 +345,7 @@
     data () {
         return {
           //购买产品的个数
-          skuNum: 1
+          skuNum: 1,
         }
     },
     components: {

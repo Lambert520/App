@@ -52,7 +52,7 @@ export default [
         // props: true
         //对象写法：额外的给路由组件传递一些参数props
         // props:{a:1,b:2}
-        //函数写法：可以params参数、query参数，通过props传递给路由组件(常用)
+        //函数写法：可以传params参数、query参数，通过props传递给自己使用，组件中使用props接收(常用)
         props: ($route) => {
             return { categoryid: $route.query.categoryid, categoryname: $route.query.categoryname }
         }

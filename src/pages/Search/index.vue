@@ -93,7 +93,7 @@
   import {mapGetters,mapState} from 'vuex'
   export default {
     name: 'Search',
-
+    props: ['categoryid','categoryname'],
     components: {
       SearchSelector
     },
