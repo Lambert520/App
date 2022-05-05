@@ -13,6 +13,8 @@ module.exports = {
         // pathRewrite: { '^/api': '' },
       },
     },
+    host: 'localhost',
+    port: 8081,
   },
 
   //此配置是 项目打包后不生成的map文件
