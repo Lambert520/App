@@ -7,7 +7,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://39.98.123.211',
+        target: 'http://gmall-h5-api.atguigu.cn',
         
         //路径排除掉 /api，此处不需要排除，需要携带
         // pathRewrite: { '^/api': '' },
