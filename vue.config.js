@@ -9,7 +9,7 @@ module.exports = {
       '/api': {
         target: 'http://gmall-h5-api.atguigu.cn',
         
-        //路径排除掉 /api，此处不需要排除，需要携带
+        //向后端请求的时候路径排除掉 /api，但是前端显示的请求信息还是加上的（此处不需要排除，因为后端需要 /api）
         // pathRewrite: { '^/api': '' },
       },
     },
