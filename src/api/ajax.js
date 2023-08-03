@@ -36,6 +36,8 @@ requests.interceptors.request.use((config)=>{
         config.headers.token = store.state.user.token;
     }
 
+    console.log("config里面的数据", config);
+
     //进度条开始动
     nprogress.start();
     return config
